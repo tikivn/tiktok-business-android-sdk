@@ -57,6 +57,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
+def getProp(key) {
+    if (System.getenv(key) != null) {
+        return System.getenv(key)
+    }
+    if (project.hasProperty(key)) {
+        return project.property(key)
+    }
+    return ""
+}
+
 afterEvaluate {
     publishing {
         publications {
@@ -68,7 +78,17 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = mavenGroupId
                 artifactId = mavenArtifactId
-                version = VERSION_NAME
+                version = VERSION_NAME + "-tiki"
+            }
+        }
+        repositories {
+            maven {
+                name "tiki"
+                url getProp('AWS_TIKI_MOBILE_RELEASE')
+                credentials(AwsCredentials) {
+                    accessKey getProp('AWS_ACCESS_KEY_ID')
+                    secretKey getProp('AWS_SECRET_ACCESS_KEY')
+                }
             }
         }
     }
