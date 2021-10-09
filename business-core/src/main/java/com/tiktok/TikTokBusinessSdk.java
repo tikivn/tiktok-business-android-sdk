@@ -340,6 +340,13 @@ public class TikTokBusinessSdk {
     }
 
     /**
+     * returns config flush interval
+     */
+    public static Integer getFlushInterval() {
+        return config.flushInterval;
+    }
+
+    /**
      * if only appId is provided, the json schema would be like
      * {
      * "app_id": "1211123727",
@@ -501,6 +508,8 @@ public class TikTokBusinessSdk {
         /* disable custom auto events */
         private List<TTConst.AutoEvents> disabledEvents;
 
+        private Integer flushInterval = null;
+
         /**
          * Read configs from <meta-data>
          *
@@ -632,6 +641,14 @@ public class TikTokBusinessSdk {
          */
         public TTConfig disableAdvertiserIDCollection() {
             this.advertiserIDCollectionEnable = false;
+            return this;
+        }
+
+        /**
+         * set customize flush interval time in secs
+         */
+        public TTConfig setFlushInterval(Integer flushInterval) {
+            this.flushInterval = flushInterval;
             return this;
         }
     }

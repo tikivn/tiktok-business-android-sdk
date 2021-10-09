@@ -125,11 +125,16 @@ public class TTAppEventLogger {
     int counter = 15;
 
     void startScheduler() {
-        doStartScheduler(TIME_BUFFER, false);
+        doStartScheduler(getFlushInterval(), false);
     }
 
     void restartScheduler() {
-        doStartScheduler(TIME_BUFFER, true);
+        doStartScheduler(getFlushInterval(), true);
+    }
+
+    private int getFlushInterval() {
+        Integer interval = TikTokBusinessSdk.getFlushInterval();
+        return interval != null ? interval : TIME_BUFFER;
     }
 
     /**
